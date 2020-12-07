@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './paper.module.css';
 
-const Paper = ({ list, deleteList }) => {
+const Paper = ({ list, status, deleteList }) => {
     const { id, content, date } = list;
-
     const checkNoDate = (date) => {
         return date !== undefined
     }
@@ -14,7 +13,7 @@ const Paper = ({ list, deleteList }) => {
         deleteList(id)
     }
 
-
+    console.log(status)
 
     if (checkNoDate(date)) {
         return (
@@ -22,7 +21,6 @@ const Paper = ({ list, deleteList }) => {
                 <div className={styles.head}>
                     <input className={styles.checkbox} type="checkbox"></input>
                     <label className={styles.date}>{date}</label>
-                    {/* <button className={styles.delete} >삭제</button> */}
                     <button className={styles.delete} onClick={handleDelete}>삭제</button>
                 </div>
                 <div className={styles.area}>

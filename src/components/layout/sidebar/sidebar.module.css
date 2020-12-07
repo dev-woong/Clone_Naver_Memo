@@ -1,10 +1,11 @@
-@value cssGreen, cssBlack, cssWhite from '../../../common/colors.css';
+@value cssGreen, cssBlack, cssLightGray, cssWhite from '../../../common/colors.css';
 
 .sidebar {
     position: absolute;
     background-color: cssWhite;
     width: 250px;
-    height: 90vh
+    height: 90vh;
+    border-right: 2px solid cssLightGray;
 }
 
 b{

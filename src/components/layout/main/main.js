@@ -5,10 +5,10 @@ import List from '../../list/list';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import Sidebar from '../sidebar/sidebar';
-// import Editor from '../editor/editor';
+import Editor from '../editor/editor';
 import styles from './main.module.css';
 
-const Main = ({ list, authService }) => {
+const Main = ({ list, status, authService }) => {
     const history = useHistory();
     const onLogout = () => {
         authService.onLogout();
@@ -26,7 +26,11 @@ const Main = ({ list, authService }) => {
             <Header onLogout={onLogout} />
             <section className={styles.container}>
                 <Sidebar />
-                <List list={list} />
+                <section className={styles.rightContainer}>
+                    <Editor list={list} status={status} />
+                    <List list={list} />
+                </section>
+
             </section>
             <Footer isLogin={true} />
         </section>

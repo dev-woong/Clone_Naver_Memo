@@ -10,6 +10,9 @@ const List = () => {
     2: { id: 2, content: "안녕하세요", date: new Date().toLocaleString() },
   })
 
+  const arrStatus = ['read', 'write', 'update']
+  const [status, setStatus] = useState(arrStatus[0])
+
 
   const addAndUpdateList = (data) => {
     setList((list) => {
@@ -34,7 +37,7 @@ const List = () => {
     <section>
       <ul className={styles.list}>
         {Object.keys(list).map((key) => {
-          return <Paper key={key} list={list[key]} deleteList={deleteList} />
+          return <Paper key={key} list={list[key]} status={status} deleteList={deleteList} />
         })}
       </ul>
     </section>

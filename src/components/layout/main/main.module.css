@@ -16,3 +16,8 @@
   display: flex;
   
 }
+
+.rightContainer{
+  margin-left: 250px;
+  width: 100%;
+}
