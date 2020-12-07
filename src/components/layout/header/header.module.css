@@ -1,0 +1,27 @@
+@value cssGreen, cssBlack, cssWhite from '../../../common/colors.css';
+
+.header {
+  width: 100%;
+  padding: 0.5em;
+  background-color: cssGreen;
+  position: relative;
+  padding-left: 2em;
+}
+
+.title {
+  margin: 0;
+  color: cssWhite;
+}
+
+.logout {
+  position: absolute;
+  right: 3em;
+  top: 1em;
+  padding: 0.8em;
+  border-radius: 20%;
+  background-color: cssBlack;
+  color: cssWhite;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}

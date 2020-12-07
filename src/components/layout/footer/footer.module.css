@@ -1,0 +1,23 @@
+@value cssBlack, cssLightGray, cssWhite, cssDarkBlue from '../../../common/colors.css';
+
+.loginFooter {
+  width: 100%;
+  background-color: cssWhite;
+  text-align: center;
+  bottom: 0px;
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+  background-color: cssWhite;
+  text-align: center;
+  bottom: 0px;
+  border: 2px solid cssLightGray;
+  margin: 0;
+}
+
+.title {
+  color: cssBlack;
+  margin: 0.2em;
+}

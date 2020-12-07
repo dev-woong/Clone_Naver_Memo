@@ -1,0 +1,21 @@
+@value cssBlack: black;
+
+@value cssWhite: white;
+
+@value cssLightGray: #B5B5B5;
+@value cssGray: #EDEDED;
+
+@value cssLightPink: #ffeae8;
+@value cssPink: pink;
+
+@value cssGreen: #00C73C;
+
+@value cssYellow: #FFFEF2;
+
+@value cssLightBlue: #64c1ff;
+@value cssBlue: #0091ea;
+@value cssDarkBlue: #0064b7;
+
+@value cssShadow: rgba(217, 217, 217, 1);
+
+@value cssColorful: linear-gradient(166deg, rgba(237, 193, 211, 1) 0%,rgba(212, 149, 161, 1) 60%, rgba(162, 63, 63, 1) 100%, rgba(127, 188, 242, 1) 100%);

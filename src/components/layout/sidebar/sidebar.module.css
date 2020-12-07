@@ -1,0 +1,13 @@
+@value cssGreen, cssBlack, cssWhite from '../../../common/colors.css';
+
+.sidebar {
+    position: absolute;
+    background-color: cssWhite;
+    width: 250px;
+    height: 90vh
+}
+
+b{
+    font-size: 20px;
+    margin: 30px;
+}
