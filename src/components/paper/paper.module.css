@@ -46,9 +46,9 @@
 }
 
 .content{
-    /* resize: none; */
+    resize: none;
     /* outline: none; */
     border: 0px;
     background-color: cssYellow;
-    /* overflow: auto; */
+    overflow: auto;
 }

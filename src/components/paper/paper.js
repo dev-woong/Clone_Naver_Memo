@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './paper.module.css';
 
-const Paper = ({ list, status, deleteList }) => {
+const Paper = ({ list, status, deleteList, funcTmpData }) => {
     const { id, content, date } = list;
+
     const checkNoDate = (date) => {
         return date !== undefined
     }
 
+    const [paperValue, setPaperValue] = useState(content);
+
+    const handleChange = event => {
+        event.preventDefault();
+        setPaperValue(event.target.value)
+        funcTmpData({ key: id, value: event.target.value })
+    }
+
     const handleDelete = event => {
-        console.log(event)
         event.preventDefault();
         deleteList(id)
     }
 
-    console.log(status)
 
     if (checkNoDate(date)) {
         return (
@@ -24,7 +31,7 @@ const Paper = ({ list, status, deleteList }) => {
                     <button className={styles.delete} onClick={handleDelete}>삭제</button>
                 </div>
                 <div className={styles.area}>
-                    <textarea className={styles.content} value={content}></textarea>
+                    <textarea className={styles.content} value={paperValue} onChange={handleChange} rows="15" cols="28"></textarea>
                 </div>
             </div>
         );
@@ -34,7 +41,7 @@ const Paper = ({ list, status, deleteList }) => {
                 <div className={styles.head}>
                 </div>
                 <div className={styles.area}>
-                    <textarea className={styles.content} value={content}></textarea>
+                    <textarea className={styles.content} value={paperValue} onChange={handleChange} rows="15" cols="28"></textarea>
                 </div>
             </div>
         );

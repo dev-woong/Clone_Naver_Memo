@@ -5,7 +5,6 @@ import List from '../../list/list';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import Sidebar from '../sidebar/sidebar';
-import Editor from '../editor/editor';
 import styles from './main.module.css';
 
 const Main = ({ list, status, authService }) => {
@@ -27,7 +26,6 @@ const Main = ({ list, status, authService }) => {
             <section className={styles.container}>
                 <Sidebar />
                 <section className={styles.rightContainer}>
-                    <Editor list={list} status={status} />
                     <List list={list} />
                 </section>
 

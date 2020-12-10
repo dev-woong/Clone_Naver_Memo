@@ -1,4 +1,4 @@
-@value cssGray, cssWhite from '../../../common/colors.css';
+@value cssGray, cssWhite from '../../common/colors.css';
 
 .editor{
     display: flex;

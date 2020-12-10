@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useContext, useEffect, useState } from "react"
 import Paper from "../paper/paper"
+import Editor from '../editor/editor';
 import styles from './list.module.css';
 
 const List = () => {
@@ -10,14 +11,27 @@ const List = () => {
     2: { id: 2, content: "안녕하세요", date: new Date().toLocaleString() },
   })
 
-  const arrStatus = ['read', 'write', 'update']
-  const [status, setStatus] = useState(arrStatus[0])
+  const chooseMode = {
+    read: 'read',
+    write: 'write',
+    update: 'update'
+  }
+  const nowMode = chooseMode.read;
 
+  // paper의 변경 값이 담기는 임시 데이터 
+  const [tmpData, setTmpData] = useState({
+    key: 0,
+    data: ''
+  })
+  const funcTmpData = (ref) => {
+    setTmpData(ref)
+  }
 
   const addAndUpdateList = (data) => {
     setList((list) => {
       const updated = { ...list }
       updated[data.id] = data
+      console.log(updated[data.id])
       return updated
     })
   }
@@ -32,12 +46,16 @@ const List = () => {
     })
   }
 
+  useEffect(() => {
+    
+  })
   return (
 
     <section>
+      <Editor list={list} mode={nowMode} tmpData={tmpData} saveList={addAndUpdateList} />
       <ul className={styles.list}>
         {Object.keys(list).map((key) => {
-          return <Paper key={key} list={list[key]} status={status} deleteList={deleteList} />
+          return <Paper key={key} list={list[key]} deleteList={deleteList} funcTmpData={funcTmpData} />
         })}
       </ul>
     </section>
