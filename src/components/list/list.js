@@ -19,12 +19,20 @@ const List = () => {
   const nowMode = chooseMode.read;
 
   // paper의 변경 값이 담기는 임시 데이터 
-  const [tmpData, setTmpData] = useState({
+  const [changedData, setChangedData] = useState({
     key: 0,
     data: ''
   })
-  const funcTmpData = (ref) => {
-    setTmpData(ref)
+
+  const [originData, setOriginData] = useState({
+    1: { id: 1, content: "테스트" },
+    2: { id: 2, content: "안녕하세요" },
+  })
+
+  const objData = { changedData, setChangedData, originData, setOriginData }
+
+  const changeData = (obj) => {
+    setChangedData({ key: obj.key, data: obj.value })
   }
 
   const addAndUpdateList = (data) => {
@@ -47,15 +55,15 @@ const List = () => {
   }
 
   useEffect(() => {
-    
+
   })
   return (
 
     <section>
-      <Editor list={list} mode={nowMode} tmpData={tmpData} saveList={addAndUpdateList} />
+      <Editor list={list} mode={nowMode} objData={objData} saveList={addAndUpdateList} />
       <ul className={styles.list}>
         {Object.keys(list).map((key) => {
-          return <Paper key={key} list={list[key]} deleteList={deleteList} funcTmpData={funcTmpData} />
+          return <Paper key={key} list={list[key]} deleteList={deleteList} changeData={changeData} />
         })}
       </ul>
     </section>

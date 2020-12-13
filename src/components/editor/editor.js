@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './editor.module.css';
 
-const Editor = ({ list, mode, tmpData, saveList }) => {
-    // const { id, content, date } = list;
+const Editor = ({ list, mode, objData, saveList }) => {
+    const { changedData, setChangedData, originData, setOriginData } = objData
 
     const handleSave = e => {
         e.preventDefault();
-        console.log(tmpData);
-        saveList(tmpData)
+        console.log(changedData);
+        saveList(changedData)
     }
 
     const handleCancle = e => {

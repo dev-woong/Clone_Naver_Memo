@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './paper.module.css';
 
-const Paper = ({ list, status, deleteList, funcTmpData }) => {
+const Paper = ({ list, status, deleteList, changeData }) => {
     const { id, content, date } = list;
 
     const checkNoDate = (date) => {
@@ -13,7 +13,7 @@ const Paper = ({ list, status, deleteList, funcTmpData }) => {
     const handleChange = event => {
         event.preventDefault();
         setPaperValue(event.target.value)
-        funcTmpData({ key: id, value: event.target.value })
+        changeData({ key: id, value: event.target.value })
     }
 
     const handleDelete = event => {
