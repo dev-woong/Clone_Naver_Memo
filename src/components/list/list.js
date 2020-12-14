@@ -24,31 +24,29 @@ const List = () => {
     data: ''
   })
 
-  const [originData, setOriginData] = useState({
-    1: { id: 1, content: "테스트" },
-    2: { id: 2, content: "안녕하세요" },
-  })
+  const objData = { changedData, setChangedData }
 
-  const objData = { changedData, setChangedData, originData, setOriginData }
-
-  const changeData = (obj) => {
-    setChangedData({ key: obj.key, data: obj.value })
+  const fnChangeData = (obj) => {
+    setChangedData({ id: obj.key, content: obj.value })
   }
 
-  const addAndUpdateList = (data) => {
+  const fnCancleData = (data) => {
+    console.log('onCancle')
+    console.log(data);
+    setList(data)
+  }
+
+  const fnAddAndUpdateList = (data) => {
     setList((list) => {
       const updated = { ...list }
-      updated[data.id] = data
-      console.log(updated[data.id])
+      updated[data.id].content = data.content
       return updated
     })
   }
 
-  const deleteList = (id) => {
-    console.log('onDeleteList')
+  const fnDeleteList = (id) => {
     setList((list) => {
       const updated = { ...list }
-      console.log(updated[id])
       delete updated[id]
       return updated
     })
@@ -60,10 +58,10 @@ const List = () => {
   return (
 
     <section>
-      <Editor list={list} mode={nowMode} objData={objData} saveList={addAndUpdateList} />
+      <Editor list={list} mode={nowMode} changedData={changedData} fnSaveList={fnAddAndUpdateList} fnCancleData={fnCancleData} />
       <ul className={styles.list}>
         {Object.keys(list).map((key) => {
-          return <Paper key={key} list={list[key]} deleteList={deleteList} changeData={changeData} />
+          return <Paper key={key} list={list[key]} fnDeleteList={fnDeleteList} fnChangeData={fnChangeData} />
         })}
       </ul>
     </section>
