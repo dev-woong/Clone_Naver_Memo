@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
-import styles from './editor.module.css';
+import React, { useState } from "react"
+import styles from "./editor.module.css"
 
-const Editor = ({ list, mode, changedData, fnSaveList, fnCancleData }) => {
+const Editor = ({ list, paperNumber, changedData, saveList, cancleEvent }) => {
+  // const Editor = ({ list, mode, changedData, saveList, cancleData }) => {
 
-    const [originData, setOriginData] = useState(list)
+  const isSaveBtnAbled =
+    changedData.content !== undefined && list[paperNumber].content !== changedData.content
 
-    const handleSave = e => {
-        e.preventDefault();
-        fnSaveList(changedData);
-        (function (changedData) {
-            setOriginData((originData) => {
-                const updated = { ...originData }
-                updated[changedData.id] = changedData
-                return updated
-            })
-        })(changedData)
-    }
+  const handleSave = (e) => {
+    e.preventDefault()
+    saveList(changedData)
+    console.log(changedData)
+  }
 
-    const handleCancle = e => {
-        e.preventDefault();
-        fnCancleData(originData);
+  const handleCancle = (e) => {
+    e.preventDefault()
+    cancleEvent()
+  }
 
-    }
+  return (
+    <section className={styles.editor}>
+      <button onClick={handleSave} className={styles.save} disabled={!isSaveBtnAbled}>
+        저장
+      </button>
+      <button onClick={handleCancle} className={styles.cancle}>
+        취소
+      </button>
+      <button className={styles.delete} disabled={true}>
+        삭제
+      </button>
+    </section>
+  )
+}
 
-    return (
-        <section className={styles.editor}>
-            <button onClick={handleSave} className={styles.save}>저장</button>
-            <button onClick={handleCancle} className={styles.cancle}>취소</button>
-            <button className={styles.delete}>삭제</button>
-        </section>
-    )
-
-};
-
-export default Editor;
+export default Editor

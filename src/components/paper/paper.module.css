@@ -1,54 +1,69 @@
 @value cssMedium, cssSmaller from '../../common/size.css';
-@value cssYellow, cssBlack, cssGray from '../../common/colors.css';
+@value cssYellow, cssDarkYellow, cssBlack, cssGray from '../../common/colors.css';
 
-.paper{
-    display: inline-block;
-    background-color: cssYellow;
-    height: 300px;
-    width: 263px;
-    margin: 7px;
-    box-shadow: 0 1px 3px #b6b6b6;
-    
+.paper {
+  display: inline-block;
+  background-color: cssYellow;
+  height: 300px;
+  width: 263px;
+  margin: 7px;
+  box-shadow: 0 1px 3px #b6b6b6;
 }
 
-.head{
-    display: flex;
-    height: 34px;
-    line-height: 34px;
-    padding: 3px 14px 0;
+.paper.focus {
+  background-color: cssYellow;
 }
 
-.checkbox{
-    display: flex;
-    position: relative;
-    /* top: 23px; */
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    top: 7px;
+.paper.blur {
+  background-color: cssDarkYellow;
 }
 
-.date{
-    color: cssBlack;
-    font-size: cssSmaller;
+.head {
+  display: flex;
+  height: 34px;
+  line-height: 34px;
+  padding: 3px 14px 0;
 }
 
-.delete{
-    height: 20px;
-    font-size: 10px;
-    width: 50px;
-    margin: 7px 20px 0px 50px;
+.checkbox {
+  display: flex;
+  position: relative;
+  /* top: 23px; */
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  top: 7px;
 }
 
-.area{
-    padding: 14px 20px 0 14px;
-    border-top: 2px solid cssGray;
+.date {
+  color: cssBlack;
+  font-size: cssSmaller;
 }
 
-.content{
-    resize: none;
-    /* outline: none; */
-    border: 0px;
-    background-color: cssYellow;
-    overflow: auto;
+.delete {
+  height: 20px;
+  font-size: 10px;
+  width: 50px;
+  margin: 7px 20px 0px 50px;
+}
+
+.area {
+  padding: 14px 20px 0 14px;
+  border-top: 2px solid cssGray;
+}
+
+.content {
+  resize: none;
+  outline: none;
+  border: 0px;
+  background-color: cssYellow;
+  overflow: auto;
+}
+
+.content.focus {
+  background-color: cssYellow;
+}
+
+.content.blur {
+  background-color: cssDarkYellow;
 }
