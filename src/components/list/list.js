@@ -16,6 +16,8 @@ const List = () => {
 
   const [focusCount, setFocusCount] = useState(0)
 
+  const [dataTobeDeleted, setDataTobeDeleted] = useState([])
+
   // const chooseMode = {
   //   read: "read",
   //   write: "write",
@@ -65,9 +67,7 @@ const List = () => {
     setFocusCount((focusCount) => focusCount - 1)
   }
 
-  useEffect(() => {
-    console.log(focusCount)
-  }, [focusCount])
+  useEffect(() => {}, [])
 
   return (
     <section>
@@ -78,6 +78,9 @@ const List = () => {
         changedData={changedData}
         saveList={addAndUpdateList}
         cancleEvent={cancleEvent}
+        dataTobeDeleted={dataTobeDeleted}
+        setDataTobeDeleted={setDataTobeDeleted}
+        deleteList={deleteList}
       />
       <ul className={styles.list}>
         {Object.keys(list).map((key) => {
@@ -92,6 +95,8 @@ const List = () => {
               focusCount={focusCount}
               focusCountPlus={focusCountPlus}
               focusCountMinus={focusCountMinus}
+              dataTobeDeleted={dataTobeDeleted}
+              setDataTobeDeleted={setDataTobeDeleted}
             />
           )
         })}

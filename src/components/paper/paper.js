@@ -12,6 +12,8 @@ const Paper = ({
   focusCount,
   focusCountPlus,
   focusCountMinus,
+  dataTobeDeleted,
+  setDataTobeDeleted,
 }) => {
   const { id, content, date } = list
   const checkNoDate = (date) => {
@@ -19,7 +21,23 @@ const Paper = ({
   }
 
   const [paperValue, setPaperValue] = useState(content)
+
+  const [isChecked, setIsChecked] = useState(true)
+
+  // paper 하나를 클릭했을때 다른 paper들 흐리게 css 효과
   const [stateOfFocus, setStateOfFocus] = useState("blur")
+
+  const handleFocus = (event) => {
+    event.preventDefault()
+    setStateOfFocus("focus")
+    focusCountPlus()
+  }
+
+  const handleBlur = (event) => {
+    event.preventDefault()
+    setStateOfFocus("blur")
+    focusCountMinus()
+  }
 
   const handleChange = (event) => {
     event.preventDefault()
@@ -32,21 +50,22 @@ const Paper = ({
     deleteList(id)
   }
 
-  const handleClick = (event) => {
+  const handleClickTextarea = (event) => {
     event.preventDefault()
     onFocus(id)
   }
 
-  const handleFocus = (event) => {
-    event.preventDefault()
-    setStateOfFocus("focus")
-    focusCountPlus()
-  }
+  const handleClickCheckbox = () => {
+    setIsChecked(!isChecked)
 
-  const handleBlur = (event) => {
-    event.preventDefault()
-    setStateOfFocus("blur")
-    focusCountMinus()
+    if (isChecked) {
+      setDataTobeDeleted((dataTobeDeleted) => dataTobeDeleted.concat(id))
+    } else {
+      setDataTobeDeleted((dataTobeDeleted) => {
+        const idx = dataTobeDeleted.indexOf(id)
+        return dataTobeDeleted.splice(idx, 1)
+      })
+    }
   }
 
   const getStylesToFocus = (state) => {
@@ -72,7 +91,12 @@ const Paper = ({
     return (
       <div className={`${styles.paper} ${getStylesToFocus(stateOfFocus)}`}>
         <div className={styles.head}>
-          <input className={styles.checkbox} type="checkbox"></input>
+          <input
+            className={styles.checkbox}
+            type="checkbox"
+            checked={!isChecked}
+            onChange={handleClickCheckbox}
+          ></input>
           <label className={styles.date}>{date}</label>
           <button className={styles.delete} onClick={handleDelete}>
             삭제
@@ -83,7 +107,7 @@ const Paper = ({
             className={`${styles.content} ${getStylesToFocus(stateOfFocus)}`}
             value={paperValue}
             onChange={handleChange}
-            onClick={handleClick}
+            onClick={handleClickTextarea}
             onFocus={handleFocus}
             onBlur={handleBlur}
             rows="15"
@@ -101,7 +125,7 @@ const Paper = ({
             className={`${styles.content} ${getStylesToFocus(stateOfFocus)}`}
             value={paperValue}
             onChange={handleChange}
-            onClick={handleClick}
+            onClick={handleClickTextarea}
             onFocus={handleFocus}
             onBlur={handleBlur}
             rows="15"
