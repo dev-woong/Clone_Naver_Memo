@@ -5,12 +5,18 @@ const Editor = ({
   list,
   paperNumber,
   changedData,
-  saveList,
+  addList,
+  updateList,
   cancleEvent,
   dataTobeDeleted,
   setDataTobeDeleted,
   deleteList,
 }) => {
+  const { id, content, date } = list
+  const checkNoDate = (date) => {
+    return date !== undefined
+  }
+
   const isSaveBtnAbled =
     changedData.content !== undefined && list[paperNumber].content !== changedData.content
 
@@ -18,8 +24,12 @@ const Editor = ({
 
   const handleSave = (e) => {
     e.preventDefault()
-    saveList(changedData)
-    console.log(changedData)
+    if (!checkNoDate(date)) {
+      addList(changedData)
+      cancleEvent()
+    } else {
+      updateList(changedData)
+    }
   }
 
   const handleCancle = (e) => {

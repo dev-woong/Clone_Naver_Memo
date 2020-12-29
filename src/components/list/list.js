@@ -5,7 +5,7 @@ import styles from "./list.module.css"
 
 const List = () => {
   const [list, setList] = useState({
-    0: { content: "간단한 메모는 여기에" },
+    0: { id: 0, content: "간단한 메모는 여기에" },
     1: { id: 1, content: "테스트", date: new Date().toLocaleString() },
     2: { id: 2, content: "안녕하세요", date: new Date().toLocaleString() },
   })
@@ -17,13 +17,6 @@ const List = () => {
   const [focusCount, setFocusCount] = useState(0)
 
   const [dataTobeDeleted, setDataTobeDeleted] = useState([])
-
-  // const chooseMode = {
-  //   read: "read",
-  //   write: "write",
-  //   update: "update",
-  // }
-  // const nowMode = chooseMode.read
 
   // paper의 변경 값이 담기는 임시 데이터
   const [changedData, setChangedData] = useState({
@@ -39,7 +32,19 @@ const List = () => {
     setCancleEventValue((cancleEventValue) => cancleEventValue + 1)
   }
 
-  const addAndUpdateList = (data) => {
+  const addList = (data) => {
+    setList((list) => {
+      const added = { ...list }
+      const length = Object.keys(list).length
+      added[length] = {}
+      added[length].id = length
+      added[length].content = data.content
+      added[length].date = new Date().toLocaleString()
+      return added
+    })
+  }
+
+  const updateList = (data) => {
     setList((list) => {
       const updated = { ...list }
       updated[data.id].content = data.content
@@ -76,7 +81,8 @@ const List = () => {
         paperNumber={selectedPaper}
         // mode={nowMode}
         changedData={changedData}
-        saveList={addAndUpdateList}
+        addList={addList}
+        updateList={updateList}
         cancleEvent={cancleEvent}
         dataTobeDeleted={dataTobeDeleted}
         setDataTobeDeleted={setDataTobeDeleted}

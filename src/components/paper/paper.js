@@ -53,6 +53,10 @@ const Paper = ({
   const handleClickTextarea = (event) => {
     event.preventDefault()
     onFocus(id)
+    console.log(content)
+    if (!checkNoDate(date)) {
+      setPaperValue("")
+    }
   }
 
   const handleClickCheckbox = () => {
