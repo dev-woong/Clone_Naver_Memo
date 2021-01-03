@@ -1,15 +1,18 @@
 @value cssGray, cssWhite from '../../common/colors.css';
 
-.editor{
-    display: flex;
-    height: 10vh;
-    width: 100%;
-    background-color: cssWhite;
-    border-bottom: 2px solid cssLightGray;
+.editor {
+  display: flex;
+  position: fixed;
+  z-index: 999;
+  height: 6vh;
+  margin-top: 39px;
+  width: 100%;
+  background-color: cssWhite;
+  border-bottom: 2px solid cssLightGray;
 }
 
-button{
-    height: 30px;
-    width: 50px;
-    margin: 10px;
+button {
+  height: 30px;
+  width: 50px;
+  margin: 10px;
 }

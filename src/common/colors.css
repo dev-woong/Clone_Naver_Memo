@@ -5,6 +5,8 @@
 @value cssLightGray: #B5B5B5;
 @value cssGray: #EDEDED;
 
+@value cssRed: #cc0000;
+
 @value cssLightPink: #ffeae8;
 @value cssPink: pink;
 
@@ -16,6 +18,8 @@
 @value cssLightBlue: #64c1ff;
 @value cssBlue: #0091ea;
 @value cssDarkBlue: #0064b7;
+
+@value cssDateColor: #999;
 
 @value cssShadow: rgba(217, 217, 217, 1);
 

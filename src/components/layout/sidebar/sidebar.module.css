@@ -1,14 +1,16 @@
 @value cssGreen, cssBlack, cssLightGray, cssWhite from '../../../common/colors.css';
 
 .sidebar {
-    position: absolute;
-    background-color: cssWhite;
-    width: 250px;
-    height: 90vh;
-    border-right: 2px solid cssLightGray;
+  position: fixed;
+  background-color: cssWhite;
+  width: 250px;
+  height: 100vh;
+  border-right: 2px solid cssLightGray;
+  margin-top: 55px;
 }
 
-b{
-    font-size: 20px;
-    margin: 30px;
+b {
+  font-size: 20px;
+  margin: 30px;
+  margin-top: 60px;
 }

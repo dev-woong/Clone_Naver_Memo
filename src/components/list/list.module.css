@@ -1,5 +1,9 @@
+@value cssGray from '../../common/colors.css';
 
-
-.list{
-    display: flex;
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 120px;
+  padding-bottom: 50px;
+  background-color: cssGray;
 }

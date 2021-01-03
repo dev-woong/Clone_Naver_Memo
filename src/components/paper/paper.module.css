@@ -1,5 +1,6 @@
 @value cssMedium, cssSmaller from '../../common/size.css';
-@value cssYellow, cssDarkYellow, cssBlack, cssGray from '../../common/colors.css';
+@value cssRed, cssYellow, cssDarkYellow, cssBlack, cssGray, cssDateColor from '../../common/colors.css';
+@value cssDefalutFont from '../../common/font.css';
 
 .paper {
   display: inline-block;
@@ -28,7 +29,6 @@
 .checkbox {
   display: flex;
   position: relative;
-  /* top: 23px; */
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -36,15 +36,23 @@
 }
 
 .date {
-  color: cssBlack;
+  color: cssDateColor;
   font-size: cssSmaller;
+  font-family: cssDefalutFont;
 }
 
 .delete {
-  height: 20px;
   font-size: 10px;
-  width: 50px;
-  margin: 7px 20px 0px 50px;
+  border: 0;
+  background-color: transparent;
+  color: cssRed;
+  outline: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: -5px;
+  left: 90px;
 }
 
 .area {

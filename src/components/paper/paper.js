@@ -103,7 +103,7 @@ const Paper = ({
           ></input>
           <label className={styles.date}>{date}</label>
           <button className={styles.delete} onClick={handleDelete}>
-            삭제
+            <i class="fas fa-times fa-2x"></i>
           </button>
         </div>
         <div className={styles.area}>
