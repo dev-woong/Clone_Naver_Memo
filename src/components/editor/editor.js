@@ -50,7 +50,7 @@ const Editor = ({
   return (
     <section className={styles.editor}>
       <button onClick={handleSave} className={styles.save} disabled={!isSaveBtnAbled}>
-        저장
+        <i class="fas fa-check"></i> 저장
       </button>
       <button onClick={handleCancle} className={styles.cancle}>
         취소

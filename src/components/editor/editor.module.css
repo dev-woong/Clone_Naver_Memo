@@ -1,18 +1,45 @@
-@value cssGray, cssWhite from '../../common/colors.css';
+@value cssGray, cssWhite,cssGreen from '../../common/colors.css';
 
 .editor {
   display: flex;
   position: fixed;
   z-index: 999;
-  height: 6vh;
+  height: 50px;
   margin-top: 39px;
   width: 100%;
   background-color: cssWhite;
   border-bottom: 2px solid cssLightGray;
 }
 
-button {
-  height: 30px;
-  width: 50px;
+.save,
+.cancle,
+.delete {
   margin: 10px;
+  border: 1px solid #cbcbcb;
+  font-size: 12px;
+  height: 28px;
+  line-height: 28px;
+  overflow: hidden;
+  vertical-align: top;
+  outline: none;
+  padding: 0 15px;
+  border-radius: 0;
+}
+
+.save:enabled,
+.cancle:enabled,
+.delete:enabled {
+  cursor: pointer;
+}
+
+.save:disabled {
+  display: none;
+}
+
+.save {
+  font-weight: bold;
+}
+
+.save i {
+  color: cssGreen;
 }

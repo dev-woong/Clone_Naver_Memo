@@ -1,24 +1,38 @@
 @value cssGreen, cssBlack, cssWhite from '../../../common/colors.css';
 
-.header {
+.header_login {
   width: 100%;
   height: 55px;
   padding: 0.5em;
+  padding-top: 13px;
   background-color: cssGreen;
   position: fixed;
   z-index: 999;
   padding-left: 2em;
 }
 
+.header_logout {
+  width: 100%;
+  height: 55px;
+  padding: 0.5em;
+  padding-top: 13px;
+  background-color: cssGreen;
+  z-index: 999;
+}
+
 .title {
-  margin: 0;
+  margin-top: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
   color: cssWhite;
+  font-family: "돋움", Dotum, Helvetica, Sans-serif, "Apple SD Gothic Neo";
 }
 
 .logout {
   position: absolute;
   right: 3em;
-  top: 0;
+  top: 12px;
   color: cssWhite;
   background-color: transparent;
   outline: 0;

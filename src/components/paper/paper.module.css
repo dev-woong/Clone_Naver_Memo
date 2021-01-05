@@ -51,8 +51,8 @@
   width: 20px;
   height: 20px;
   position: relative;
-  top: -5px;
-  left: 90px;
+  top: 5px;
+  left: 100px;
 }
 
 .area {

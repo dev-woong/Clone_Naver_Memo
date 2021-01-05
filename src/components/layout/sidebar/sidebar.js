@@ -1,11 +1,15 @@
-import React, { memo } from 'react';
-import styles from './sidebar.module.css';
+import React, { memo } from "react"
+import styles from "./sidebar.module.css"
 
 const Sidebar = memo(({ onLogout }) => (
+  <sidebar className={styles.sidebar}>
+    <div className={styles.contents}>
+      <span>
+        <i class="far fa-sticky-note"></i>
+        <h2>메모장</h2>
+      </span>
+    </div>
+  </sidebar>
+))
 
-    <sidebar className={styles.sidebar}>
-        <b>할일</b>
-    </sidebar>
-));
-
-export default Sidebar;
+export default Sidebar

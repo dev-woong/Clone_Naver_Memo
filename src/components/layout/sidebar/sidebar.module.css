@@ -1,4 +1,4 @@
-@value cssGreen, cssBlack, cssLightGray, cssWhite from '../../../common/colors.css';
+@value cssGreen, cssBlack, cssLightGray, cssDarkGray, cssWhite from '../../../common/colors.css';
 
 .sidebar {
   position: fixed;
@@ -9,8 +9,15 @@
   margin-top: 55px;
 }
 
-b {
-  font-size: 20px;
-  margin: 30px;
-  margin-top: 60px;
+.contents span {
+  display: flex;
+  margin-left: 20px;
+}
+.contents h2,
+.contents span i {
+  font-size: 15px;
+  color: cssDarkGray;
+  margin: 5px;
+  margin-top: 25px;
+  line-height: 25px;
 }

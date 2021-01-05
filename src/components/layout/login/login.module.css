@@ -1,4 +1,4 @@
-@value cssDarkBlue, cssLightBlue, cssWhite from '../../../common/colors.css';
+@value cssDarkBlue, cssLightBlue, cssWhite, cssLightYellow, cssLightGreen from '../../../common/colors.css';
 
 .login {
   width: 30em;
@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: cssWhite;
+  background-color: cssLightGreen;
 }
 
 .list {
@@ -33,5 +33,5 @@
 }
 
 .button:hover {
-  background-color: cssLightBlue;
+  background-color: cssLightYellow;
 }

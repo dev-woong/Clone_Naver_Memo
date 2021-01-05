@@ -4,14 +4,19 @@
 
 @value cssLightGray: #B5B5B5;
 @value cssGray: #EDEDED;
+@value cssDarkGray: #616161;
 
 @value cssRed: #cc0000;
 
 @value cssLightPink: #ffeae8;
 @value cssPink: pink;
+@value cssDarkPink: pink;
 
+@value cssLightGreen: #cdffd0;
 @value cssGreen: #00C73C;
+@value cssDarkGreen: #99ff9e;
 
+@value cssLightYellow: #fffaa4;
 @value cssYellow: #FFFEF2;
 @value cssDarkYellow: #F6F5EF;
 
