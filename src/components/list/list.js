@@ -3,28 +3,11 @@ import Paper from "../paper/paper"
 import Editor from "../editor/editor"
 import styles from "./list.module.css"
 import dateFormat from "dateformat"
+import db from "../../service/db"
 
-const List = () => {
+const List = ({ authService }) => {
   const [list, setList] = useState({
     9999: { id: 9999, content: "간단한 메모는 여기에" },
-    1: { id: 1, content: "1, 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    2: { id: 2, content: "2, 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    3: { id: 3, content: "3, 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    4: { id: 4, content: "4, 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    5: { id: 5, content: "5, 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    6: { id: 6, content: "6, 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    7: { id: 7, content: "7, 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    8: { id: 8, content: "8, 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    9: { id: 9, content: "9, 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    10: { id: 10, content: "10 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    11: { id: 11, content: "11 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    12: { id: 12, content: "12 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    13: { id: 13, content: "13 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    14: { id: 14, content: "14 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    15: { id: 15, content: "15 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    16: { id: 16, content: "16 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    17: { id: 17, content: "17 테스트", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
-    18: { id: 18, content: "18 안녕하세요", date: dateFormat(new Date(), "yyyy. mm. dd hh:MM") },
   })
 
   const [selectedPaper, setSelectedPaper] = useState(0)
@@ -49,6 +32,19 @@ const List = () => {
     setCancleEventValue((cancleEventValue) => cancleEventValue + 1)
   }
 
+  const getLastIdAtDb = () => {}
+
+  const getDbIntoList = (data) => {
+    setList((list) => {
+      const added = { ...list }
+      added[data.id] = {}
+      added[data.id].id = data.id
+      added[data.id].content = data.content
+      added[data.id].date = data.date
+      return added
+    })
+  }
+
   const addList = (data) => {
     setList((list) => {
       const added = { ...list }
@@ -56,13 +52,14 @@ const List = () => {
       added[length] = {}
       added[length].id = length
       added[length].content = data.content
-      added[length].date = dateFormat(new Date(), "yyyy. mm. dd hh:MM")
-      console.log(added[length].date)
+      added[length].date = dateFormat(new Date(), "yyyy. mm. dd HH:MM")
       return added
     })
   }
 
   const updateList = (data) => {
+    console.log("data")
+    console.log(data.id)
     setList((list) => {
       const updated = { ...list }
       updated[data.id].content = data.content
@@ -72,10 +69,73 @@ const List = () => {
 
   const deleteList = (id) => {
     setList((list) => {
+      console.log(list)
       const updated = { ...list }
       delete updated[id]
       return updated
     })
+  }
+
+  const addDbData = (data) => {
+    const uid = authService.getUserInfo().uid
+
+    const lastIdDoc = db.collection(uid).doc("lastId")
+    let lastId = 0
+
+    lastIdDoc
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          lastId = doc.data().id
+          lastId *= 1
+          lastId += 1
+        } else {
+          console.log("No such document!")
+          lastId = 1
+        }
+      })
+      .then(function () {
+        db.collection(uid).doc("lastId").set({ id: lastId })
+
+        db.collection(uid)
+          .doc(lastId.toString())
+          .set({
+            id: lastId,
+            content: data.content,
+            date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error)
+          })
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error)
+      })
+  }
+
+  const updateDbData = (data) => {
+    db.collection(authService.getUserInfo().uid)
+      .doc(data.id.toString())
+      .set({
+        id: data.id,
+        content: data.content,
+        date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
+      })
+      .catch(function (error) {
+        console.error("Error adding document: ", error)
+      })
+  }
+
+  const deleteDbData = (id) => {
+    db.collection(authService.getUserInfo().uid)
+      .doc(id.toString())
+      .delete()
+      .then(function () {
+        console.log("Document successfully deleted!")
+      })
+      .catch(function (error) {
+        console.error("Error removing document: ", error)
+      })
   }
 
   const onFocus = (id) => {
@@ -90,7 +150,23 @@ const List = () => {
     setFocusCount((focusCount) => focusCount - 1)
   }
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    console.log("useEffect")
+    setTimeout(() => {
+      db.collection(authService.getUserInfo().uid)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            if (doc.id !== "lastId") {
+              getDbIntoList(doc.data())
+            }
+          })
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error)
+        })
+    }, 2000)
+  }, [])
 
   return (
     <section>
@@ -100,10 +176,13 @@ const List = () => {
         changedData={changedData}
         addList={addList}
         updateList={updateList}
+        deleteList={deleteList}
+        addDbData={addDbData}
+        updateDbData={updateDbData}
+        deleteDbData={deleteDbData}
         cancleEvent={cancleEvent}
         dataTobeDeleted={dataTobeDeleted}
         setDataTobeDeleted={setDataTobeDeleted}
-        deleteList={deleteList}
       />
       <ul className={styles.list}>
         {Object.keys(list)
@@ -114,13 +193,13 @@ const List = () => {
                 key={key}
                 list={list[key]}
                 deleteList={deleteList}
+                deleteDbData={deleteDbData}
                 changeData={changeData}
                 onFocus={onFocus}
                 cancleEvent={cancleEventValue}
                 focusCount={focusCount}
                 focusCountPlus={focusCountPlus}
                 focusCountMinus={focusCountMinus}
-                dataTobeDeleted={dataTobeDeleted}
                 setDataTobeDeleted={setDataTobeDeleted}
               />
             )

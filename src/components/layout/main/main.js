@@ -13,15 +13,14 @@ const Main = ({ list, status, authService }) => {
     authService.onLogout()
   }
 
-  useEffect(() => {
-    authService.onAuthChange((user) => {
-      if (!user) {
-        history.push("/")
-      } else {
-        console.log(authService.getUserInfo())
-      }
-    })
+  authService.onAuthChange((user) => {
+    if (!user) {
+      history.push("/")
+    } else {
+      console.log(authService.getUserInfo())
+    }
   })
+  useEffect(() => {}, [])
 
   return (
     <section className={styles.main}>
@@ -29,7 +28,7 @@ const Main = ({ list, status, authService }) => {
       <section className={styles.container}>
         <Sidebar />
         <section className={styles.rightContainer}>
-          <List list={list} />
+          <List list={list} authService={authService} />
         </section>
       </section>
       <Footer isLogin={true} />

@@ -4,15 +4,14 @@ import styles from "./paper.module.css"
 
 const Paper = ({
   list,
-  status,
   deleteList,
+  deleteDbData,
   changeData,
   onFocus,
   cancleEvent,
   focusCount,
   focusCountPlus,
   focusCountMinus,
-  dataTobeDeleted,
   setDataTobeDeleted,
 }) => {
   const { id, content, date } = list
@@ -47,13 +46,15 @@ const Paper = ({
 
   const handleDelete = (event) => {
     event.preventDefault()
+    deleteDbData(id)
     deleteList(id)
   }
 
   const handleClickTextarea = (event) => {
     event.preventDefault()
     onFocus(id)
-    console.log(content)
+    console.log(`id : ${id}`)
+    console.log(`content : ${content}`)
     if (!checkNoDate(date)) {
       setPaperValue("")
     }

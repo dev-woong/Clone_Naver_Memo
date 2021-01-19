@@ -7,10 +7,13 @@ const Editor = ({
   changedData,
   addList,
   updateList,
+  deleteList,
+  addDbData,
+  updateDbData,
+  deleteDbData,
   cancleEvent,
   dataTobeDeleted,
   setDataTobeDeleted,
-  deleteList,
 }) => {
   const checkNoDate = (list) => {
     return list[paperNumber].date !== undefined
@@ -25,9 +28,11 @@ const Editor = ({
     console.log(list)
     e.preventDefault()
     if (!checkNoDate(list)) {
+      addDbData(changedData)
       addList(changedData)
       cancleEvent()
     } else {
+      updateDbData(changedData)
       updateList(changedData)
     }
   }
@@ -40,6 +45,7 @@ const Editor = ({
   const handleDelete = (e) => {
     e.preventDefault()
     dataTobeDeleted.forEach((id) => {
+      deleteDbData(id)
       deleteList(id)
     })
     setDataTobeDeleted([])
