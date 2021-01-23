@@ -2,10 +2,9 @@
 
 .editor {
   display: flex;
-  position: fixed;
   z-index: 999;
   height: 50px;
-  margin-top: 39px;
+  margin-top: 55px;
   width: 100%;
   background-color: cssWhite;
   border-bottom: 2px solid cssLightGray;

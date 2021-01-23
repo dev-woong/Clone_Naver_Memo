@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react"
 import Paper from "../paper/paper"
 import Editor from "../editor/editor"
+import Loading from "../loading/loading"
 import styles from "./list.module.css"
 import dateFormat from "dateformat"
 import db from "../../service/db"
@@ -9,6 +10,8 @@ const List = ({ authService }) => {
   const [list, setList] = useState({
     9999: { id: 9999, content: "간단한 메모는 여기에" },
   })
+
+  const [isLoading, setIsLoading] = useState(true)
 
   const [selectedPaper, setSelectedPaper] = useState(0)
 
@@ -165,6 +168,7 @@ const List = ({ authService }) => {
         .catch(function (error) {
           console.log("Error getting documents: ", error)
         })
+      setIsLoading(false)
     }, 2000)
   }, [])
 
@@ -184,27 +188,33 @@ const List = ({ authService }) => {
         dataTobeDeleted={dataTobeDeleted}
         setDataTobeDeleted={setDataTobeDeleted}
       />
-      <ul className={styles.list}>
-        {Object.keys(list)
-          .reverse()
-          .map((key) => {
-            return (
-              <Paper
-                key={key}
-                list={list[key]}
-                deleteList={deleteList}
-                deleteDbData={deleteDbData}
-                changeData={changeData}
-                onFocus={onFocus}
-                cancleEvent={cancleEventValue}
-                focusCount={focusCount}
-                focusCountPlus={focusCountPlus}
-                focusCountMinus={focusCountMinus}
-                setDataTobeDeleted={setDataTobeDeleted}
-              />
-            )
-          })}
-      </ul>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div>
+          <ul className={styles.list}>
+            {Object.keys(list)
+              .reverse()
+              .map((key) => {
+                return (
+                  <Paper
+                    key={key}
+                    list={list[key]}
+                    deleteList={deleteList}
+                    deleteDbData={deleteDbData}
+                    changeData={changeData}
+                    onFocus={onFocus}
+                    cancleEvent={cancleEventValue}
+                    focusCount={focusCount}
+                    focusCountPlus={focusCountPlus}
+                    focusCountMinus={focusCountMinus}
+                    setDataTobeDeleted={setDataTobeDeleted}
+                  />
+                )
+              })}
+          </ul>
+        </div>
+      )}
     </section>
   )
 }

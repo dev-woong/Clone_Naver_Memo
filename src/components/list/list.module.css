@@ -2,8 +2,8 @@
 
 .list {
   display: flex;
+  position: fixed;
   flex-wrap: wrap;
-  padding-top: 120px;
   padding-bottom: 50px;
   background-color: cssGray;
 }
