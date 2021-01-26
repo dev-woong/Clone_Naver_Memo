@@ -25,7 +25,6 @@ const Editor = ({
   const isDeleteBtnAbled = dataTobeDeleted.length > 0
 
   const handleSave = (e) => {
-    console.log(list)
     e.preventDefault()
     if (!checkNoDate(list)) {
       addDbData(changedData)

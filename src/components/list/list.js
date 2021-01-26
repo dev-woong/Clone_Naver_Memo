@@ -35,8 +35,6 @@ const List = ({ authService }) => {
     setCancleEventValue((cancleEventValue) => cancleEventValue + 1)
   }
 
-  const getLastIdAtDb = () => {}
-
   const getDbIntoList = (data) => {
     setList((list) => {
       const added = { ...list }
@@ -49,20 +47,34 @@ const List = ({ authService }) => {
   }
 
   const addList = (data) => {
-    setList((list) => {
-      const added = { ...list }
-      const length = Object.keys(list).length
-      added[length] = {}
-      added[length].id = length
-      added[length].content = data.content
-      added[length].date = dateFormat(new Date(), "yyyy. mm. dd HH:MM")
-      return added
-    })
+    const uid = authService.getUserInfo().uid
+
+    const lastIdDoc = db.collection(uid).doc("lastId")
+    let lastId = 1
+
+    lastIdDoc
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          lastId = doc.data().id
+          lastId *= 1
+          lastId += 1
+        }
+      })
+      .then(() => {
+        setList((list) => {
+          const added = { ...list }
+          // const length = Object.keys(list).length
+          added[lastId] = {}
+          added[lastId].id = lastId
+          added[lastId].content = data.content
+          added[lastId].date = dateFormat(new Date(), "yyyy. mm. dd HH:MM")
+          return added
+        })
+      })
   }
 
   const updateList = (data) => {
-    console.log("data")
-    console.log(data.id)
     setList((list) => {
       const updated = { ...list }
       updated[data.id].content = data.content
@@ -72,7 +84,6 @@ const List = ({ authService }) => {
 
   const deleteList = (id) => {
     setList((list) => {
-      console.log(list)
       const updated = { ...list }
       delete updated[id]
       return updated
@@ -83,21 +94,21 @@ const List = ({ authService }) => {
     const uid = authService.getUserInfo().uid
 
     const lastIdDoc = db.collection(uid).doc("lastId")
-    let lastId = 0
+    let lastId = 1
 
     lastIdDoc
       .get()
-      .then(function (doc) {
+      .then((doc) => {
         if (doc.exists) {
           lastId = doc.data().id
           lastId *= 1
           lastId += 1
         } else {
-          console.log("No such document!")
-          lastId = 1
+          // console.log("No such document!")
+          // lastId = 1
         }
       })
-      .then(function () {
+      .then(() => {
         db.collection(uid).doc("lastId").set({ id: lastId })
 
         db.collection(uid)
@@ -107,11 +118,11 @@ const List = ({ authService }) => {
             content: data.content,
             date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.error("Error adding document: ", error)
           })
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log("Error getting document:", error)
       })
   }
@@ -124,7 +135,7 @@ const List = ({ authService }) => {
         content: data.content,
         date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.error("Error adding document: ", error)
       })
   }
@@ -133,10 +144,10 @@ const List = ({ authService }) => {
     db.collection(authService.getUserInfo().uid)
       .doc(id.toString())
       .delete()
-      .then(function () {
+      .then(() => {
         console.log("Document successfully deleted!")
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.error("Error removing document: ", error)
       })
   }
@@ -158,14 +169,14 @@ const List = ({ authService }) => {
     setTimeout(() => {
       db.collection(authService.getUserInfo().uid)
         .get()
-        .then(function (querySnapshot) {
+        .then((querySnapshot) => {
           querySnapshot.forEach(function (doc) {
             if (doc.id !== "lastId") {
               getDbIntoList(doc.data())
             }
           })
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log("Error getting documents: ", error)
         })
       setIsLoading(false)

@@ -54,7 +54,7 @@ const Paper = ({
     event.preventDefault()
     onFocus(id)
     console.log(`id : ${id}`)
-    console.log(`content : ${content}`)
+    // console.log(`content : ${content}`)
     if (!checkNoDate(date)) {
       setPaperValue("")
     }

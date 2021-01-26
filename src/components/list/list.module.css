@@ -1,8 +1,8 @@
 @value cssGray from '../../common/colors.css';
 
 .list {
+  overflow: auto;
   display: flex;
-  position: fixed;
   flex-wrap: wrap;
   padding-bottom: 50px;
   background-color: cssGray;
