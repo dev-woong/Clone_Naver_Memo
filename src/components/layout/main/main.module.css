@@ -12,12 +12,17 @@
   align-items: center;
 }
 
-.container{
+.container {
   display: flex;
-  
 }
 
-.rightContainer{
+.rightContainer {
   margin-left: 250px;
   width: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+  .rightContainer {
+    margin: 0;
+  }
 }
