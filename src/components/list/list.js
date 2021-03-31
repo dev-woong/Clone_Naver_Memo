@@ -1,12 +1,14 @@
-import React, { useCallback, useContext, useEffect, useState } from "react"
-import Paper from "../paper/paper"
-import Editor from "../editor/editor"
-import Loading from "../loading/loading"
-import styles from "./list.module.css"
+import React, { useEffect, useState } from "react"
+import Paper from "../Paper/Paper"
+import Editor from "../Editor/Editor"
+import Loading from "../Loading/Loading"
+import styles from "./List.module.css"
 import dateFormat from "dateformat"
-import db from "../../service/db"
+import Db from "../../service/db"
 
-const List = ({ authService }) => {
+const List = ({ userInfo }) => {
+  const db = new Db()
+
   const [list, setList] = useState({
     9999: { id: 9999, content: "간단한 메모는 여기에" },
   })
@@ -47,31 +49,27 @@ const List = ({ authService }) => {
   }
 
   const addList = (data) => {
-    const uid = authService.getUserInfo().uid
-
-    const lastIdDoc = db.collection(uid).doc("lastId")
     let lastId = 1
-
-    lastIdDoc
-      .get()
-      .then((doc) => {
+    db.getLastData(
+      userInfo.uid,
+      (doc) => {
         if (doc.exists) {
           lastId = doc.data().id
           lastId *= 1
           lastId += 1
         }
-      })
-      .then(() => {
+      },
+      () => {
         setList((list) => {
           const added = { ...list }
-          // const length = Object.keys(list).length
           added[lastId] = {}
           added[lastId].id = lastId
           added[lastId].content = data.content
           added[lastId].date = dateFormat(new Date(), "yyyy. mm. dd HH:MM")
           return added
         })
-      })
+      }
+    )
   }
 
   const updateList = (data) => {
@@ -91,65 +89,37 @@ const List = ({ authService }) => {
   }
 
   const addDbData = (data) => {
-    const uid = authService.getUserInfo().uid
-
-    const lastIdDoc = db.collection(uid).doc("lastId")
     let lastId = 1
-
-    lastIdDoc
-      .get()
-      .then((doc) => {
+    db.getLastData(
+      userInfo.uid,
+      (doc) => {
         if (doc.exists) {
           lastId = doc.data().id
           lastId *= 1
           lastId += 1
-        } else {
-          // console.log("No such document!")
-          // lastId = 1
         }
-      })
-      .then(() => {
-        db.collection(uid).doc("lastId").set({ id: lastId })
-
-        db.collection(uid)
-          .doc(lastId.toString())
-          .set({
-            id: lastId,
-            content: data.content,
-            date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
-          })
-          .catch((error) => {
-            console.error("Error adding document: ", error)
-          })
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error)
-      })
+      },
+      () => {
+        db.setData(userInfo.uid, "lastId", { id: lastId })
+        db.setData(userInfo.uid, lastId.toString(), {
+          id: lastId,
+          content: data.content,
+          date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
+        })
+      }
+    )
   }
 
   const updateDbData = (data) => {
-    db.collection(authService.getUserInfo().uid)
-      .doc(data.id.toString())
-      .set({
-        id: data.id,
-        content: data.content,
-        date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error)
-      })
+    db.setData(userInfo.uid, data.id.toString(), {
+      id: data.id,
+      content: data.content,
+      date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
+    })
   }
 
   const deleteDbData = (id) => {
-    db.collection(authService.getUserInfo().uid)
-      .doc(id.toString())
-      .delete()
-      .then(() => {
-        console.log("Document successfully deleted!")
-      })
-      .catch((error) => {
-        console.error("Error removing document: ", error)
-      })
+    db.deleteData(userInfo.uid, id.toString())
   }
 
   const onFocus = (id) => {
@@ -165,23 +135,14 @@ const List = ({ authService }) => {
   }
 
   useEffect(() => {
-    console.log("useEffect")
-    setTimeout(() => {
-      db.collection(authService.getUserInfo().uid)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach(function (doc) {
-            if (doc.id !== "lastId") {
-              getDbIntoList(doc.data())
-            }
-          })
+    userInfo.uid &&
+      db.getAllData(userInfo.uid, (querySnapshot) => {
+        querySnapshot.forEach(function (doc) {
+          doc.id === "lastId" || getDbIntoList(doc.data())
         })
-        .catch((error) => {
-          console.log("Error getting documents: ", error)
-        })
-      setIsLoading(false)
-    }, 2000)
-  }, [])
+      })
+    setIsLoading(false)
+  }, [userInfo])
 
   return (
     <section>

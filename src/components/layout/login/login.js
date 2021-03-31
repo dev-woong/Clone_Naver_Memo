@@ -1,9 +1,9 @@
 import React from "react"
 import { useEffect } from "react"
 import { useHistory } from "react-router-dom"
-import Footer from "../footer/footer"
-import Header from "../header/header"
-import styles from "./login.module.css"
+import Footer from "../Footer/Footer"
+import Header from "../Header/Header"
+import styles from "./Login.module.css"
 
 const Login = ({ authService }) => {
   const history = useHistory()

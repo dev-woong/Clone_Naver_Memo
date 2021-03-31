@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import styles from './app.module.css'
-import Login from './components/layout/login/login';
-import Main from './components/layout/main/main';
+import React from "react"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import styles from "./App.module.css"
+import Login from "./components/layout/Login/Login"
+import Main from "./components/layout/Main/Main"
 
 function App({ authService }) {
   return (

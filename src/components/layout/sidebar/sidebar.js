@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import styles from "./sidebar.module.css"
+import styles from "./Sidebar.module.css"
 
 const Sidebar = memo(({ onLogout }) => (
   <sidebar className={styles.sidebar}>

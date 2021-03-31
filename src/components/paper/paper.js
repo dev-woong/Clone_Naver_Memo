@@ -1,6 +1,6 @@
 import { logDOM } from "@testing-library/react"
 import React, { useState, useEffect } from "react"
-import styles from "./paper.module.css"
+import styles from "./Paper.module.css"
 
 const Paper = ({
   list,

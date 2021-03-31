@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import styles from "./editor.module.css"
+import styles from "./Editor.module.css"
 
 const Editor = ({
   list,
