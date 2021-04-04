@@ -6,7 +6,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 300px;
 }
 .spinner {
   animation: spin 2s linear infinite;

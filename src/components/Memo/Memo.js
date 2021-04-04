@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react"
 import Paper from "../Paper/Paper"
 import Editor from "../Editor/Editor"
-import Loading from "../Loading/Loading"
-import styles from "./List.module.css"
+// import Loading from "../Loading/Loading"
+import styles from "./Memo.module.css"
 import dateFormat from "dateformat"
 import Db from "../../service/db"
 
 const List = ({ userInfo }) => {
-  const db = new Db()
+  const db = new Db(userInfo.uid)
 
   const [list, setList] = useState({
     9999: { id: 9999, content: "간단한 메모는 여기에" },
   })
 
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(false)
 
   const [selectedPaper, setSelectedPaper] = useState(0)
 
@@ -51,7 +51,6 @@ const List = ({ userInfo }) => {
   const addList = (data) => {
     let lastId = 1
     db.getLastData(
-      userInfo.uid,
       (doc) => {
         if (doc.exists) {
           lastId = doc.data().id
@@ -91,7 +90,6 @@ const List = ({ userInfo }) => {
   const addDbData = (data) => {
     let lastId = 1
     db.getLastData(
-      userInfo.uid,
       (doc) => {
         if (doc.exists) {
           lastId = doc.data().id
@@ -100,8 +98,8 @@ const List = ({ userInfo }) => {
         }
       },
       () => {
-        db.setData(userInfo.uid, "lastId", { id: lastId })
-        db.setData(userInfo.uid, lastId.toString(), {
+        db.setData("lastId", { id: lastId })
+        db.setData(lastId.toString(), {
           id: lastId,
           content: data.content,
           date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
@@ -111,7 +109,7 @@ const List = ({ userInfo }) => {
   }
 
   const updateDbData = (data) => {
-    db.setData(userInfo.uid, data.id.toString(), {
+    db.setData(data.id.toString(), {
       id: data.id,
       content: data.content,
       date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
@@ -119,7 +117,7 @@ const List = ({ userInfo }) => {
   }
 
   const deleteDbData = (id) => {
-    db.deleteData(userInfo.uid, id.toString())
+    db.deleteData(id.toString())
   }
 
   const onFocus = (id) => {
@@ -135,13 +133,13 @@ const List = ({ userInfo }) => {
   }
 
   useEffect(() => {
-    userInfo.uid &&
-      db.getAllData(userInfo.uid, (querySnapshot) => {
+    if (userInfo.uid) {
+      db.getAllData((querySnapshot) => {
         querySnapshot.forEach(function (doc) {
           doc.id === "lastId" || getDbIntoList(doc.data())
         })
       })
-    setIsLoading(false)
+    }
   }, [userInfo])
 
   return (
@@ -160,33 +158,29 @@ const List = ({ userInfo }) => {
         dataTobeDeleted={dataTobeDeleted}
         setDataTobeDeleted={setDataTobeDeleted}
       />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div>
-          <ul className={styles.list}>
-            {Object.keys(list)
-              .reverse()
-              .map((key) => {
-                return (
-                  <Paper
-                    key={key}
-                    list={list[key]}
-                    deleteList={deleteList}
-                    deleteDbData={deleteDbData}
-                    changeData={changeData}
-                    onFocus={onFocus}
-                    cancleEvent={cancleEventValue}
-                    focusCount={focusCount}
-                    focusCountPlus={focusCountPlus}
-                    focusCountMinus={focusCountMinus}
-                    setDataTobeDeleted={setDataTobeDeleted}
-                  />
-                )
-              })}
-          </ul>
-        </div>
-      )}
+      <div>
+        <ul className={styles.list}>
+          {Object.keys(list)
+            .reverse()
+            .map((key) => {
+              return (
+                <Paper
+                  key={key}
+                  list={list[key]}
+                  deleteList={deleteList}
+                  deleteDbData={deleteDbData}
+                  changeData={changeData}
+                  onFocus={onFocus}
+                  cancleEvent={cancleEventValue}
+                  focusCount={focusCount}
+                  focusCountPlus={focusCountPlus}
+                  focusCountMinus={focusCountMinus}
+                  setDataTobeDeleted={setDataTobeDeleted}
+                />
+              )
+            })}
+        </ul>
+      </div>
     </section>
   )
 }

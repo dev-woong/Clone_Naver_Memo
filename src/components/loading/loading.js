@@ -5,7 +5,7 @@ const Loading = () => {
   return (
     <div className={styles.container}>
       <div className={styles.spinner}>
-        <i class="fas fa-spinner fa-10x"></i>
+        <i className="fas fa-spinner fa-10x"></i>
       </div>
     </div>
   )

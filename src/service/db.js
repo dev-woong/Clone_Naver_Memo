@@ -2,10 +2,13 @@ import firebaseApp from "./firebase"
 import firebase from "firebase"
 
 class Db {
-  getAllData(uid, callback) {
+  constructor(uid) {
+    this.uid = uid
+  }
+  getAllData(callback) {
     firebase
       .firestore()
-      .collection(uid)
+      .collection(this.uid)
       .get()
       .then(callback)
       .catch((error) => {
@@ -13,10 +16,10 @@ class Db {
       })
   }
 
-  getLastData(uid, callback, callback2) {
+  getLastData(callback, callback2) {
     firebase
       .firestore()
-      .collection(uid)
+      .collection(this.uid)
       .doc("lastId")
       .get()
       .then(callback)
@@ -26,10 +29,10 @@ class Db {
       })
   }
 
-  setData(uid, id, obj) {
+  setData(id, obj) {
     firebase
       .firestore()
-      .collection(uid)
+      .collection(this.uid)
       .doc(id)
       .set(obj)
       .catch((error) => {
@@ -37,10 +40,10 @@ class Db {
       })
   }
 
-  deleteData(uid, id) {
+  deleteData(id) {
     firebase
       .firestore()
-      .collection(uid)
+      .collection(this.uid)
       .doc(id)
       .delete()
       .catch((error) => {

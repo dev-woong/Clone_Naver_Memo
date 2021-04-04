@@ -9,14 +9,14 @@ const Header = ({ onLogout, userInfo }) => {
     <header className={onLogout ? styles.header_login : styles.header_logout}>
       {onLogout && (
         <div>
-          <span>{userInfo.displayName}</span>
+          <span className={styles.user_name}>{userInfo.displayName}님 환영합니다</span>
           <button className={styles.logout} onClick={onLogout}>
-            <i class="fas fa-sign-out-alt fa-2x"></i>
+            <i className="fas fa-sign-out-alt fa-2x"></i>
           </button>
         </div>
       )}
-      <Link to="/" className={styles.title}>
-        메모
+      <Link to="/main" className={styles.title}>
+        <img src={require("../../../common/naver_logo.png")} />
       </Link>
     </header>
   )
