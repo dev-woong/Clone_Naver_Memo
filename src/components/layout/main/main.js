@@ -17,39 +17,22 @@ const Main = ({ authService }) => {
 
   const [isLoad, setIsLoad] = useState(false)
 
-  const [pageSwapCount, setPageSwapCount] = useState(0)
-
+  const [selectedPage, setSelectedPage] = useState("memo")
   const onLogout = () => {
     authService.onLogout()
   }
 
-  const swapPage = (clickedPage) => {
-    switch (clickedPage) {
-      case "memo":
-        memoPage = true
-        todoListPage = false
-        trashPage = false
-        setPageSwapCount(pageSwapCount + 1)
-        console.log(pageSwapCount)
-        break
-      case "todoList":
-        memoPage = false
-        todoListPage = true
-        trashPage = false
-        setPageSwapCount(pageSwapCount + 1)
-        break
-      case "trash":
-        memoPage = false
-        todoListPage = false
-        trashPage = true
-        setPageSwapCount(pageSwapCount + 1)
-        break
-    }
-  }
-
-  let memoPage,
-    todoListPage,
-    trashPage = true
+  // let swapPage = {
+  //   page: "memo",
+  //   get pageName() {
+  //     console.log("get page")
+  //     return this.page
+  //   },
+  //   set pageName(value) {
+  //     this.page = value
+  //     console.log("set page : ", this.page)
+  //   },
+  // }
 
   useEffect(() => {
     authService.onAuthChange((user) => {
@@ -60,18 +43,18 @@ const Main = ({ authService }) => {
         setIsLoad(true)
       }
     })
-  }, [userInfo, pageSwapCount])
+  }, [userInfo, selectedPage])
 
   if (isLoad) {
     return (
       <section className={styles.main}>
         <Header onLogout={onLogout} userInfo={userInfo} />
         <section className={styles.container}>
-          <Sidebar swapPage={swapPage} />
+          <Sidebar swapPage={setSelectedPage} />
           <section className={styles.rightContainer}>
-            {memoPage || <Memo userInfo={userInfo} />}
-            {todoListPage && <ToDoList />}
-            <Trash />
+            {selectedPage === "memo" && <Memo userInfo={userInfo} />}
+            {selectedPage === "todoList" && <ToDoList />}
+            {selectedPage === "trash" && <Trash />}
           </section>
         </section>
         <Footer isLogin={true} />

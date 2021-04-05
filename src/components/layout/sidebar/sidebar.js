@@ -11,7 +11,7 @@ const Sidebar = ({ swapPage }) => {
   }
 
   const handleClickTrash = () => {
-    swapPage("Trash")
+    swapPage("trash")
   }
 
   return (
