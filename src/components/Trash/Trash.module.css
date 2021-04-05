@@ -1,0 +1,6 @@
+@value cssLarge from '../../common/size.css';
+
+h1 {
+  text-align: center;
+  font-size: cssLarge;
+}

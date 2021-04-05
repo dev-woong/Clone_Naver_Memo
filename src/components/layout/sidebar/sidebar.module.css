@@ -6,19 +6,31 @@
   width: 250px;
   height: 100vh;
   border-right: 2px solid cssLightGray;
-  margin-top: 55px;
+}
+
+.contents ul {
+  margin: 0px;
+  padding: 15px 0px;
+}
+
+.contents li {
+  list-style: none;
 }
 
 .contents span {
   display: flex;
   margin-left: 20px;
 }
+
+.underLine {
+  border-bottom: 1px solid #e8e8e8;
+}
+
 .contents h2,
 .contents span i {
-  font-size: 15px;
+  font-size: 14px;
   color: cssDarkGray;
   margin: 5px;
-  margin-top: 25px;
   line-height: 25px;
   cursor: pointer;
 }

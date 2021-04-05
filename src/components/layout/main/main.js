@@ -18,21 +18,10 @@ const Main = ({ authService }) => {
   const [isLoad, setIsLoad] = useState(false)
 
   const [selectedPage, setSelectedPage] = useState("memo")
+  
   const onLogout = () => {
     authService.onLogout()
   }
-
-  // let swapPage = {
-  //   page: "memo",
-  //   get pageName() {
-  //     console.log("get page")
-  //     return this.page
-  //   },
-  //   set pageName(value) {
-  //     this.page = value
-  //     console.log("set page : ", this.page)
-  //   },
-  // }
 
   useEffect(() => {
     authService.onAuthChange((user) => {
