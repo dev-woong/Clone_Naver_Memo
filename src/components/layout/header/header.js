@@ -9,7 +9,9 @@ const Header = ({ onLogout, userInfo }) => {
     <header className={onLogout ? styles.header_login : styles.header_logout}>
       {onLogout && (
         <div>
-          <span className={styles.user_name}>{userInfo.displayName}님 환영합니다</span>
+          {userInfo.displayName && (
+            <span className={styles.user_name}>{userInfo.displayName}님 환영합니다</span>
+          )}
           <button className={styles.logout} onClick={onLogout}>
             <i className="fas fa-sign-out-alt fa-2x"></i>
           </button>

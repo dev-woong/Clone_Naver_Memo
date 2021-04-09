@@ -20,13 +20,13 @@ const Sidebar = ({ swapPage }) => {
         <ul className={styles.underLine}>
           <li>
             <span>
-              <i onClick={handleClickTodoList} className="fas fa-calendar-check"></i>
+              <i onClick={handleClickTodoList} className="fas fa-star"></i>
               <h2 onClick={handleClickTodoList}>중요 메모</h2>
             </span>
           </li>
           <li>
             <span>
-              <i onClick={handleClickTodoList} className="fas fa-star"></i>
+              <i onClick={handleClickTodoList} className="fas fa-calendar-check"></i>
               <h2 onClick={handleClickTodoList}>오늘 할일</h2>
             </span>
           </li>

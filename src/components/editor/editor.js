@@ -19,7 +19,7 @@ const Editor = ({
     return list[paperNumber].date !== undefined
   }
 
-  const isSaveBtnAbled =
+  let isSaveBtnAbled =
     changedData.content !== undefined && list[paperNumber].content !== changedData.content
 
   const isDeleteBtnAbled = dataTobeDeleted.length > 0
@@ -34,6 +34,8 @@ const Editor = ({
       updateDbData(changedData)
       updateList(changedData)
     }
+    // console.log("handleSave")
+    // document.querySelector("#btnSave").disabled = false
   }
 
   const handleCancle = (e) => {
@@ -49,8 +51,6 @@ const Editor = ({
     })
     setDataTobeDeleted([])
   }
-
-  useEffect(() => {}, [])
 
   return (
     <section className={styles.editor}>
