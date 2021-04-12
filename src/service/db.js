@@ -30,14 +30,19 @@ class Db {
   }
 
   setData(id, obj) {
-    firebase
-      .firestore()
-      .collection(this.uid)
-      .doc(id)
-      .set(obj)
-      .catch((error) => {
-        console.error("Error adding document: ", error)
-      })
+    return new Promise((resolve, reject) => {
+      firebase
+        .firestore()
+        .collection(this.uid)
+        .doc(id)
+        .set(obj)
+        .then(function () {
+          resolve("completed add to DB")
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error)
+        })
+    })
   }
 
   deleteData(id) {

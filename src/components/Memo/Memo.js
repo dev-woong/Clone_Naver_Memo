@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Paper from "../Paper/Paper"
 import Editor from "../Editor/Editor"
-// import Loading from "../Loading/Loading"
 import styles from "./Memo.module.css"
 import dateFormat from "dateformat"
 import Db from "../../service/db"
@@ -12,8 +11,6 @@ const List = ({ userInfo }) => {
   const [list, setList] = useState({
     9999: { id: 9999, content: "간단한 메모는 여기에" },
   })
-
-  // const [isLoading, setIsLoading] = useState(false)
 
   const [selectedPaper, setSelectedPaper] = useState(0)
 
@@ -88,24 +85,29 @@ const List = ({ userInfo }) => {
   }
 
   const addDbData = (data) => {
-    let lastId = 1
-    db.getLastData(
-      (doc) => {
-        if (doc.exists) {
-          lastId = doc.data().id
-          lastId *= 1
-          lastId += 1
+    return new Promise((resolve, reject) => {
+      let lastId = 1
+      db.getLastData(
+        (doc) => {
+          if (doc.exists) {
+            lastId = doc.data().id
+            lastId *= 1
+            lastId += 1
+          }
+        },
+        () => {
+          db.setData("lastId", { id: lastId })
+          db.setData(lastId.toString(), {
+            id: lastId,
+            content: data.content,
+            date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
+          }).then(function (text) {
+            console.log(text)
+            resolve("completed : addDbData")
+          })
         }
-      },
-      () => {
-        db.setData("lastId", { id: lastId })
-        db.setData(lastId.toString(), {
-          id: lastId,
-          content: data.content,
-          date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
-        })
-      }
-    )
+      )
+    })
   }
 
   const updateDbData = (data) => {

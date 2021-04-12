@@ -19,23 +19,21 @@ const Editor = ({
     return list[paperNumber].date !== undefined
   }
 
-  let isSaveBtnAbled =
-    changedData.content !== undefined && list[paperNumber].content !== changedData.content
+  const [isSaveBtnAbled, setIsSaveBtnAbled] = useState(false)
 
   const isDeleteBtnAbled = dataTobeDeleted.length > 0
 
   const handleSave = (e) => {
     e.preventDefault()
     if (!checkNoDate(list)) {
-      addDbData(changedData)
       addList(changedData)
+      addDbData(changedData)
       cancleEvent()
     } else {
       updateDbData(changedData)
       updateList(changedData)
     }
-    // console.log("handleSave")
-    // document.querySelector("#btnSave").disabled = false
+    setIsSaveBtnAbled(false)
   }
 
   const handleCancle = (e) => {
@@ -52,9 +50,15 @@ const Editor = ({
     setDataTobeDeleted([])
   }
 
+  useEffect(() => {
+    if (changedData.content !== undefined && list[paperNumber].content !== changedData.content) {
+      setIsSaveBtnAbled(true)
+    }
+  }, [changedData])
+
   return (
     <section className={styles.editor}>
-      <button onClick={handleSave} className={styles.save} disabled={!isSaveBtnAbled}>
+      <button onClick={handleSave} className={styles.save} id="btnSave" disabled={!isSaveBtnAbled}>
         <i class="fas fa-check"></i> 저장
       </button>
       <button onClick={handleCancle} className={styles.cancle}>
