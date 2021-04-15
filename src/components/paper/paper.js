@@ -1,9 +1,10 @@
-import { logDOM } from "@testing-library/react"
 import React, { useState, useEffect } from "react"
 import styles from "./Paper.module.css"
 
 const Paper = ({
   list,
+  setList,
+  db,
   deleteList,
   deleteDbData,
   changeData,
@@ -14,7 +15,7 @@ const Paper = ({
   focusCountMinus,
   setDataTobeDeleted,
 }) => {
-  const { id, content, date } = list
+  const { id, content, date, important } = list
   const checkNoDate = (date) => {
     return date !== undefined
   }
@@ -29,19 +30,35 @@ const Paper = ({
   const handleFocus = (event) => {
     event.preventDefault()
     setStateOfFocus("focus")
-    focusCountPlus()
+    focusCountPlus && focusCountPlus()
   }
 
   const handleBlur = (event) => {
     event.preventDefault()
     setStateOfFocus("blur")
-    focusCountMinus()
+    focusCountMinus && focusCountMinus()
   }
 
   const handleChange = (event) => {
     event.preventDefault()
     setPaperValue(event.target.value)
-    changeData({ key: id, value: event.target.value })
+    changeData({ key: id, value: event.target.value, important })
+  }
+
+  const handleImportant = (event) => {
+    event.preventDefault()
+    setList((list) => {
+      const updated = { ...list }
+      updated[id].important = !updated[id].important
+      return updated
+    })
+    db.setData(id.toString(), {
+      id,
+      content,
+      date,
+      important: !important,
+    })
+    list.important = !important
   }
 
   const handleDelete = (event) => {
@@ -52,9 +69,7 @@ const Paper = ({
 
   const handleClickTextarea = (event) => {
     event.preventDefault()
-    onFocus(id)
-    console.log(`id : ${id}`)
-    // console.log(`content : ${content}`)
+    onFocus && onFocus(id)
     if (!checkNoDate(date)) {
       setPaperValue("")
     }
@@ -92,6 +107,17 @@ const Paper = ({
     setPaperValue(content)
   }, [content, cancleEvent])
 
+  const textAreaProps = {
+    className: `${styles.content} ${getStylesToFocus(stateOfFocus)}`,
+    value: paperValue,
+    onChange: handleChange,
+    onClick: handleClickTextarea,
+    onFocus: handleFocus,
+    onBlur: handleBlur,
+    rows: "15",
+    cols: "30",
+  }
+
   if (checkNoDate(date)) {
     return (
       <div className={`${styles.paper} ${getStylesToFocus(stateOfFocus)}`}>
@@ -103,21 +129,18 @@ const Paper = ({
             onChange={handleClickCheckbox}
           ></input>
           <label className={styles.date}>{date}</label>
+          <button
+            className={`${styles.important} ${important ? styles.true : styles.false}`}
+            onClick={handleImportant}
+          >
+            <i class="fas fa-star fa-2x"></i>
+          </button>
           <button className={styles.delete} onClick={handleDelete}>
             <i class="fas fa-times fa-2x"></i>
           </button>
         </div>
         <div className={styles.area}>
-          <textarea
-            className={`${styles.content} ${getStylesToFocus(stateOfFocus)}`}
-            value={paperValue}
-            onChange={handleChange}
-            onClick={handleClickTextarea}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            rows="15"
-            cols="30"
-          ></textarea>
+          <textarea {...textAreaProps} readOnly={!changeData} />
         </div>
       </div>
     )
@@ -126,16 +149,7 @@ const Paper = ({
       <div className={`${styles.paper} ${getStylesToFocus(stateOfFocus)}`}>
         <div className={styles.head}></div>
         <div className={styles.area}>
-          <textarea
-            className={`${styles.content} ${getStylesToFocus(stateOfFocus)}`}
-            value={paperValue}
-            onChange={handleChange}
-            onClick={handleClickTextarea}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            rows="15"
-            cols="30"
-          ></textarea>
+          <textarea {...textAreaProps} />
         </div>
       </div>
     )

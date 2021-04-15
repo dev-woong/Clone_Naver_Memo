@@ -6,6 +6,7 @@ class Db {
     this.uid = uid
   }
   getAllData(callback) {
+    console.log(`uid : ${this.uid}`)
     firebase
       .firestore()
       .collection(this.uid)

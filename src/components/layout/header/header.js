@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import styles from "./Header.module.css"
 
 const Header = ({ onLogout, userInfo }) => {
-  useEffect(() => {}, [userInfo])
+  // useEffect(() => {}, [userInfo])
 
   return (
     <header className={onLogout ? styles.header_login : styles.header_logout}>

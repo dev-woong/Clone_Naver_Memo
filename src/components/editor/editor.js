@@ -1,3 +1,4 @@
+import { getByDisplayValue } from "@testing-library/dom"
 import React, { useState, useEffect } from "react"
 import styles from "./Editor.module.css"
 
@@ -24,7 +25,7 @@ const Editor = ({
   const isDeleteBtnAbled = dataTobeDeleted.length > 0
 
   const handleSave = (e) => {
-    e.preventDefault()
+    changedData && e.preventDefault()
     if (!checkNoDate(list)) {
       addList(changedData)
       addDbData(changedData)
@@ -51,8 +52,10 @@ const Editor = ({
   }
 
   useEffect(() => {
-    if (changedData.content !== undefined && list[paperNumber].content !== changedData.content) {
-      setIsSaveBtnAbled(true)
+    if (changedData) {
+      if (changedData.content !== undefined && list[paperNumber].content !== changedData.content) {
+        setIsSaveBtnAbled(true)
+      }
     }
   }, [changedData])
 
@@ -61,7 +64,7 @@ const Editor = ({
       <button onClick={handleSave} className={styles.save} id="btnSave" disabled={!isSaveBtnAbled}>
         <i class="fas fa-check"></i> 저장
       </button>
-      <button onClick={handleCancle} className={styles.cancle}>
+      <button onClick={handleCancle} className={styles.cancle} disabled={!changedData}>
         취소
       </button>
       <button onClick={handleDelete} className={styles.delete} disabled={!isDeleteBtnAbled}>

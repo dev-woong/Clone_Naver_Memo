@@ -10,6 +10,10 @@ const Sidebar = ({ swapPage }) => {
     swapPage("todoList")
   }
 
+  const handleClickImportant = () => {
+    swapPage("importantMemo")
+  }
+
   const handleClickTrash = () => {
     swapPage("trash")
   }
@@ -20,8 +24,8 @@ const Sidebar = ({ swapPage }) => {
         <ul className={styles.underLine}>
           <li>
             <span>
-              <i onClick={handleClickTodoList} className="fas fa-star"></i>
-              <h2 onClick={handleClickTodoList}>중요 메모</h2>
+              <i onClick={handleClickImportant} className="fas fa-star"></i>
+              <h2 onClick={handleClickImportant}>중요 메모</h2>
             </span>
           </li>
           <li>

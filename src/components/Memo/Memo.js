@@ -24,10 +24,11 @@ const List = ({ userInfo }) => {
   const [changedData, setChangedData] = useState({
     key: 0,
     data: "",
+    important: false,
   })
 
   const changeData = (obj) => {
-    setChangedData({ id: obj.key, content: obj.value })
+    setChangedData({ id: obj.key, content: obj.value, important: false })
   }
 
   const cancleEvent = () => {
@@ -41,6 +42,7 @@ const List = ({ userInfo }) => {
       added[data.id].id = data.id
       added[data.id].content = data.content
       added[data.id].date = data.date
+      added[data.id].important = data.important
       return added
     })
   }
@@ -62,6 +64,7 @@ const List = ({ userInfo }) => {
           added[lastId].id = lastId
           added[lastId].content = data.content
           added[lastId].date = dateFormat(new Date(), "yyyy. mm. dd HH:MM")
+          added[lastId].important = data.important
           return added
         })
       }
@@ -101,6 +104,7 @@ const List = ({ userInfo }) => {
             id: lastId,
             content: data.content,
             date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
+            important: data.important,
           }).then(function (text) {
             console.log(text)
             resolve("completed : addDbData")
@@ -115,6 +119,7 @@ const List = ({ userInfo }) => {
       id: data.id,
       content: data.content,
       date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
+      important: data.important,
     })
   }
 
@@ -135,13 +140,12 @@ const List = ({ userInfo }) => {
   }
 
   useEffect(() => {
-    if (userInfo.uid) {
+    userInfo.uid &&
       db.getAllData((querySnapshot) => {
         querySnapshot.forEach(function (doc) {
           doc.id === "lastId" || getDbIntoList(doc.data())
         })
       })
-    }
   }, [userInfo])
 
   return (
@@ -169,6 +173,8 @@ const List = ({ userInfo }) => {
                 <Paper
                   key={key}
                   list={list[key]}
+                  setList={setList}
+                  db={db}
                   deleteList={deleteList}
                   deleteDbData={deleteDbData}
                   changeData={changeData}

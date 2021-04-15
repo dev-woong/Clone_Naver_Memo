@@ -2,6 +2,7 @@ import React from "react"
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import Memo from "../../Memo/Memo"
+import ImportantMemo from "../../ImportantMemo/ImportantMemo"
 import Trash from "../../Trash/Trash"
 import ToDoList from "../../ToDoList/ToDoList"
 import Footer from "../Footer/Footer"
@@ -18,7 +19,7 @@ const Main = ({ authService }) => {
   const [isLoad, setIsLoad] = useState(false)
 
   const [selectedPage, setSelectedPage] = useState("memo")
-  
+
   const onLogout = () => {
     authService.onLogout()
   }
@@ -42,6 +43,7 @@ const Main = ({ authService }) => {
           <Sidebar swapPage={setSelectedPage} />
           <section className={styles.rightContainer}>
             {selectedPage === "memo" && <Memo userInfo={userInfo} />}
+            {selectedPage === "importantMemo" && <ImportantMemo userInfo={userInfo} />}
             {selectedPage === "todoList" && <ToDoList />}
             {selectedPage === "trash" && <Trash />}
           </section>
