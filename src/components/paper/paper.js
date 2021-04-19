@@ -14,6 +14,7 @@ const Paper = ({
   focusCountPlus,
   focusCountMinus,
   setDataTobeDeleted,
+  type,
 }) => {
   const { id, content, date, important } = list
   const checkNoDate = (date) => {
@@ -25,18 +26,28 @@ const Paper = ({
   const [isChecked, setIsChecked] = useState(true)
 
   // paper 하나를 클릭했을때 다른 paper들 흐리게 css 효과
-  const [stateOfFocus, setStateOfFocus] = useState("blur")
+  const [stateOfFocus, setStateOfFocus] = useState(() => {
+    if (type === "important") {
+      return "focus"
+    } else {
+      return "blur"
+    }
+  })
 
   const handleFocus = (event) => {
-    event.preventDefault()
-    setStateOfFocus("focus")
-    focusCountPlus && focusCountPlus()
+    if (type === "allMemo") {
+      event.preventDefault()
+      setStateOfFocus("focus")
+      focusCountPlus()
+    }
   }
 
   const handleBlur = (event) => {
-    event.preventDefault()
-    setStateOfFocus("blur")
-    focusCountMinus && focusCountMinus()
+    if (type === "allMemo") {
+      event.preventDefault()
+      setStateOfFocus("blur")
+      focusCountMinus && focusCountMinus()
+    }
   }
 
   const handleChange = (event) => {

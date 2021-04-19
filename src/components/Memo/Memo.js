@@ -184,6 +184,7 @@ const List = ({ userInfo }) => {
                   focusCountPlus={focusCountPlus}
                   focusCountMinus={focusCountMinus}
                   setDataTobeDeleted={setDataTobeDeleted}
+                  type="allMemo"
                 />
               )
             })}

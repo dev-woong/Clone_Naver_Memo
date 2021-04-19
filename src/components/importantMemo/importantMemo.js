@@ -73,6 +73,7 @@ const ImportantMemo = ({ userInfo }) => {
                   deleteList={deleteList}
                   deleteDbData={deleteDbData}
                   setDataTobeDeleted={setDataTobeDeleted}
+                  type="important"
                 />
               )
             })}
