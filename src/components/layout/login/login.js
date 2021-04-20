@@ -15,11 +15,7 @@ const Login = ({ authService }) => {
   }
 
   const onLogin = (event) => {
-    console.log(event.currentTarget.textContent)
-    authService
-      .login(event.currentTarget.textContent)
-      .then((data) => console.log(data))
-      .catch((err) => alert(err.message))
+    authService.login(event.currentTarget.textContent).catch((err) => alert(err.message))
   }
 
   useEffect(() => {

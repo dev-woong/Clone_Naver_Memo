@@ -12,7 +12,6 @@ const ImportantMemo = ({ userInfo }) => {
   const [dataTobeDeleted, setDataTobeDeleted] = useState([])
 
   const getImportantMemoList = (data) => {
-    console.log(data.important)
     setList((list) => {
       const added = { ...list }
       added[data.id] = {}
@@ -37,7 +36,6 @@ const ImportantMemo = ({ userInfo }) => {
   }
 
   useEffect(() => {
-    console.log("test")
     userInfo.uid &&
       db.getAllData((querySnapshot) => {
         querySnapshot.forEach(function (doc) {
@@ -45,10 +43,6 @@ const ImportantMemo = ({ userInfo }) => {
         })
       })
   }, [userInfo])
-
-  useEffect(() => {
-    console.log("test")
-  })
 
   return (
     <section>

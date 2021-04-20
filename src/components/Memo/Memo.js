@@ -105,8 +105,7 @@ const List = ({ userInfo }) => {
             content: data.content,
             date: dateFormat(new Date(), "yyyy. mm. dd HH:MM"),
             important: data.important,
-          }).then(function (text) {
-            console.log(text)
+          }).then(function () {
             resolve("completed : addDbData")
           })
         }
